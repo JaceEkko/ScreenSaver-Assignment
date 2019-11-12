@@ -1,0 +1,45 @@
+.ObjectProps{
+  position: absolute;
+  margin-right: 5vmin;
+  overflow: visible;
+}
+.ObjectProps img{
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+}
+
+.ObjectPropsChase{
+  position: absolute;
+  margin-right: 5vmin;
+  overflow: visible;
+}
+.ObjectPropsChase img{
+  display: flex;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+}
+
+.ObjectPropsLight{
+  position: absolute;
+  margin-right: 5vmin;
+  overflow: visible;
+}
+.ObjectPropsLight img{
+  display: flex;
+  justify-content: center;
+  width: 80px;
+  height: 300px;
+}
+
+.Ground{
+  position: absolute;
+  background-color: #252759;
+}
+
+body{
+  background-image: url("Images/background.png");
+  background-position: top;
+}
