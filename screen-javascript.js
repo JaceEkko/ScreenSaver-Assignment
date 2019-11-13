@@ -36,7 +36,7 @@ var light = {
 
 
 document.addEventListener('DOMContentLoaded', function(event) {
-
+  //create the ground, followed by the light, the chased, and the runners
   createGround();
 
   createLight(light);
