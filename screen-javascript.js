@@ -29,32 +29,17 @@ var chase = {
   "Direction":1
 };
 
-var light = [
-  {
+var light = {
     "Image":"Images/streetLight.png",
-    "Speed":20
-  },
-  {
-    "Image":"Images/streetLight.png",
-    "Speed":20
-  },
-  {
-    "Image":"Images/streetLight.png",
-    "Speed":20
-  },
-  {
-    "Image":"Images/streetLight.png",
-    "Speed":20
-  }
-]
+    "Speed":30
+  };
+
 
 document.addEventListener('DOMContentLoaded', function(event) {
 
   createGround();
 
-  for(var i = 0; i < light.length; i++){
-    createLights(light[i], i);
-  }
+  createLight(light);
 
   createChase(chase);
 
@@ -63,25 +48,24 @@ document.addEventListener('DOMContentLoaded', function(event) {
   }
 
 
-  window.setInterval(moveRunner,100);
-  // window.setInterval(moveChase,100);
+  window.setInterval(moveObjects,100);
 })
 
 function createGround(){
   let ground = document.createElement("DIV");
   ground.classList.add("Ground");
-  ground.style.top = 80 + "vmin";
+  ground.style.top = window.innerHeight - 90 + "px";
   ground.style.left = 0 + "px";
   ground.style.padding = window.innerWidth + "px";
   scene.appendChild(ground);
 }
 
-function createLights(newlight, num){
+function createLight(newlight, num){
   let light = document.createElement("DIV");
   light.classList.add("ObjectPropsLight");
   light.setAttribute("id", "light");
-  light.style.right = num * (window.innerWidth/4) + "px";
-  light.style.bottom = 85 + "px";
+  light.style.left = window.innerWidth + "px";
+  light.style.top = window.innerHeight - 370 + "px";
 
   let lightImg = document.createElement("IMG");
   lightImg.setAttribute("src", newlight["Image"]);
@@ -121,11 +105,12 @@ function createRunner(newRun) {
   scene.appendChild(runner);
 }
 
-function moveRunner(){
+function moveObjects(){
   var allElements = document.getElementsByClassName("ObjectProps");
   var chaseElement = document.getElementById("chased");
-  var lightElements = document.getElementsByClassName("ObjectPropsLight");
+  var lightElements = document.getElementById("light");
 
+  //Move Runners
   for(var i = 0; i < allElements.length; i++){
     var oldTop = parseInt(allElements[i].style.left);
 
@@ -140,22 +125,18 @@ function moveRunner(){
     allElements[i].style.left = newTop + 'px';
   }
 
-  for(var i = 0; i < lightElements.length; i++){
-    var oldTopL = parseInt(lightElements[i].style.left);
-
-    if(oldTopL < 0){
-      oldTopL += 10000;
-    }
-    else{
-      var newTopL = Math.abs(oldTopL + light[i]["Speed"]);
-      lightElements[i].style.right = newTopL + 'px';
-    }
-
-    // var newTopL = Math.abs(oldTopL - light[i]["Speed"]);
-    // lightElements[i].style.left = newTopL + 'px';
+  //Move Light
+  var oldTopL = parseInt(lightElements.style.left);
+  var newTopL = 0;
+  if(oldTopL <= light["Speed"]){
+    newTopL = window.innerWidth;
   }
+  else{
+    newTopL = Math.abs(oldTopL - light["Speed"]);
+  }
+  lightElements.style.left = newTopL + 'px';
 
-
+  //Move Chased
   var oldTopC = parseInt(chaseElement.style.left);
   if(oldTopC >= window.innerWidth - 80){
     chase["Direction"] = -1;
